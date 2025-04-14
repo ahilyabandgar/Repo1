@@ -1,0 +1,66 @@
+Sure! Here's a step-by-step explanation of how the COBOL program in `insert.txt` will execute with the provided sample data:
+
+### Step-by-Step Execution Flow
+
+1. **Program Initialization**:
+   - The program starts by evaluating the length of the communication area (`EIBCALEN`). If it is zero, it initializes the insert map and sends it to the user. If it is six, it receives the user input.
+
+2. **Sending the Insert Map**:
+   - The program retrieves the current date and time using CICS commands and formats them.
+   - The date and time are moved to the appropriate fields on the map.
+   - The insert map is sent to the user for input.
+
+3. **Receiving User Input**:
+   - The program receives user input from the insert map and evaluates the response code (`WS-RESP`).
+   - If the response is normal, it proceeds to check the key pressed by the user.
+
+4. **Key Check**:
+   - The program checks which key the user pressed (`EIBAID`). Based on the key, it performs different actions such as validation, return to menu, clear, help, or invalid function.
+
+5. **Validation of Employee Details**:
+   - The program validates the employee details entered by the user. It performs various validation checks for:
+     - **Employee Name**: Ensures the name contains only valid characters and is not empty.
+     - **Designation**: Checks if the designation is valid by querying the `DESIGNATION` table.
+     - **Email**: Validates the email format and ensures it contains '@gmail.com'.
+     - **Project ID**: Checks if the project ID is valid by querying the `PROJECT_MASTER` table.
+     - **Department ID**: Validates the department ID by querying the `DEPARTMENT_MASTER` table.
+     - **Salary**: Ensures the salary is within the valid range (10,000 to 999,999).
+
+6. **Insertion of Validated Employee Record**:
+   - If all the details are valid, the program proceeds to insert the employee record into the database.
+   - It generates an employee ID, extension number, and project leader ID if necessary.
+   - The employee details are then inserted into the `EMPLOYEE_MASTER` table.
+
+7. **Error Handling**:
+   - If any validation fails, the program displays appropriate error messages for invalid input or failed insert operations.
+   - The user is prompted to correct the input and resubmit the details.
+
+8. **Returning Control**:
+   - After processing the input, the program returns control to the calling program with the communication area and its length.
+
+### Example Flow with Sample Data
+
+Let's take the first record as an example:
+
+- **Employee Name**: ZJXKQWVU
+- **Designation**: MGR
+- **Email**: ZJXKQWVU@gmail.com
+- **Project ID**: 1234
+- **Department ID**: 456
+- **Salary**: 50000
+
+1. **Initialization**: The program starts and sends the insert map to the user.
+2. **User Input**: The user enters the above details.
+3. **Receiving Input**: The program receives the input and checks the key pressed.
+4. **Validation**:
+   - **Name**: Validates that "ZJXKQWVU" contains only valid characters.
+   - **Designation**: Checks if "MGR" is a valid designation.
+   - **Email**: Ensures "ZJXKQWVU@gmail.com" is in the correct format.
+   - **Project ID**: Validates "1234" by querying the `PROJECT_MASTER` table.
+   - **Department ID**: Validates "456" by querying the `DEPARTMENT_MASTER` table.
+   - **Salary**: Ensures "50000" is within the valid range.
+5. **Insertion**: All details are valid, so the program inserts the record into the `EMPLOYEE_MASTER` table.
+6. **Returning Control**: The program returns control to the calling program.
+
+This process is repeated for each of the 10 records, ensuring all details are validated and inserted correctly.
+
